@@ -416,6 +416,7 @@ namespace Presentacion
 
                         TextBox_Cliente.Text = string.Empty;
                         TextBox_Vendedor.Text = string.Empty;
+                        Label_MostrarTotalPagar.Text = string.Empty;
                         MessageBox.Show("Gracias por preferirnos");
                     }
 
