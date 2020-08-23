@@ -1,14 +1,7 @@
 ﻿using FontAwesome.Sharp;
 using Presentacion.Config;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Presentacion
@@ -23,12 +16,17 @@ namespace Presentacion
 
         Entidades.Vendedor Vendedor;
         public static int idVendedor = 0;
+        public static string VendedorNombre;
 
         Entidades.Cliente Cliente;
         public static int idCliente = 0;
 
-        Negocios.Venta VentaNegocio;
         Entidades.Venta VentaEntidad;
+        Negocios.Venta VentaNegocio;
+
+        Negocios.Impresora Impresora;
+        Negocios.Ticket Ticket;
+
         public FormVenta()
         {
             InitializeComponent();
@@ -412,17 +410,96 @@ namespace Presentacion
 
                             VentaNegocio.InsertarVentas(VentaEntidad);
                         }
+                        TicketFactura();
                         SetupColumnsCargadas();
                         LimpiarProductos();
 
                         TextBox_Cliente.Text = string.Empty;
                         TextBox_Vendedor.Text = string.Empty;
-                        MessageBox.Show("Venta Realizada Correctamente");
+                        MessageBox.Show("Gracias por preferirnos");
                     }
 
                 }
             }
             catch (Exception ex) { MessageBox.Show("Error:" + ex); }
+        }
+
+        private void TicketFactura()
+        {
+            if (VentaEntidad == null)
+            {
+                VentaEntidad = new Entidades.Venta();
+            }
+            if (Ticket == null)
+            {
+                Ticket = new Negocios.Ticket();
+            }
+            // egermaneduca@gmail.com
+            //imprime una linea de descripcion
+            Ticket.TextoCentro("**********************************");
+            Ticket.TextoCentro("*          Empresa xxxxx         *");
+            Ticket.TextoCentro("**********************************");
+            Ticket.TextoCentro("**********************************");
+
+            Ticket.TextoIzquierda("Dirc: xxxx");
+            Ticket.TextoIzquierda("Tel: xxxx ");
+            Ticket.TextoIzquierda("Rnc: xxxx");
+            Ticket.TextoIzquierda("");
+            Ticket.TextoCentro("Factura de Venta"); //imprime una linea de descripcion
+            Ticket.TextoIzquierda("No Fac: " + VentaEntidad.Factura.ToString());
+            Ticket.TextoIzquierda("Fecha: " + DateTime.Now.ToShortDateString() + " Hora: " + DateTime.Now.ToShortTimeString());
+            Ticket.TextoIzquierda("Le Atendio: "+VendedorNombre);
+            Ticket.TextoIzquierda("");
+            Negocios.Ticket.LineasGuion();//-------------------------
+
+            Negocios.Ticket.EncabezadoVenta();
+            Negocios.Ticket.LineasGuion();
+            //Detalle de la factura
+            foreach (DataGridViewRow rows in DGV_Data.Rows)
+            {
+                if (rows.Cells[1].Value.ToString().Length > 15) { 
+                    Ticket.AgregaArticulo(articulo: rows.Cells[1].Value.ToString().Substring(0, 15).ToLower(),
+                    int.Parse(rows.Cells[2].Value.ToString()),//Cantidad
+                    int.Parse(rows.Cells[3].Value.ToString()),//Precio 
+                    double.Parse(rows.Cells[4].Value.ToString())); //SubTotal
+                }
+                else {
+                    Ticket.AgregaArticulo(articulo: rows.Cells[1].Value.ToString().ToLower(),
+                    int.Parse(rows.Cells[2].Value.ToString()),//Cantidad
+                    int.Parse(rows.Cells[3].Value.ToString()),//Precio 
+                    double.Parse(rows.Cells[4].Value.ToString())); //SubTotal
+                }
+
+                //imprime una linea de descripcion
+            }
+
+            Negocios.Ticket.LineasGuion();
+            Ticket.AgregaTotales("Sub-Total", double.Parse(Label_MostrarTotalPagar.Text)); // imprime linea con Subtotal
+            Ticket.AgregaTotales("Descuento", double.Parse("000")); // imprime linea con decuento total
+            Ticket.AgregaTotales("Mas ITBIS", double.Parse("000")); // imprime linea con ITBis total
+            Ticket.TextoIzquierda(" ");
+            Ticket.AgregaTotales("Total", double.Parse(Label_MostrarTotalPagar.Text)); // imprime linea con total
+            Ticket.TextoIzquierda(" ");
+            Ticket.AgregaTotales("Efectivo Entregado: ", double.Parse(Label_MostrarTotalPagar.Text));
+            Ticket.AgregaTotales("Efectivo Devuelto: ", double.Parse("000"));
+
+
+            // Ticket1.LineasTotales(); // imprime linea 
+
+            Ticket.TextoIzquierda(" ");
+            Ticket.TextoCentro("**********************************");
+            Ticket.TextoCentro("*     Gracias por preferirnos    *");
+            Ticket.TextoCentro("**********************************");
+            Ticket.TextoIzquierda(" ");
+
+            if (Impresora == null)
+            {
+                Impresora = new Negocios.Impresora();
+            }
+
+            if (Impresora.impresoraDisponible.Count > 0)
+                Ticket.ImprimirTiket(); //Imprimir
+               // ticket.ImprimirTiket(Impresora.impresoraDisponible[3].ToString()); //Imprimir
         }
     }
 }

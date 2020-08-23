@@ -304,11 +304,11 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Ayuda\info.pdf" />
+    <None Include="DiagramaClass.cd" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Negocios.Cliente.datasource" />
     <None Include="Properties\DataSources\Negocios.ClienteReport.datasource" />
     <None Include="Properties\DataSources\Negocios.Fabricante.datasource" />
-    <None Include="Properties\DataSources\Negocios.FabricanteReporte.datasource" />
     <None Include="Properties\DataSources\Negocios.Producto.datasource" />
     <None Include="Properties\DataSources\Negocios.ProductoReport.datasource" />
     <None Include="Properties\DataSources\Negocios.Usuario.datasource" />

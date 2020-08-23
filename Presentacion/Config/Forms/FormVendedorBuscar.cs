@@ -51,6 +51,7 @@ namespace Presentacion.Config.Forms
         private void CargarValor() {
             int fila = DGV_Data.CurrentRow.Index;
             FormVenta.idVendedor = int.Parse(DGV_Data.Rows[fila].Cells[0].Value.ToString());
+            FormVenta.VendedorNombre = DGV_Data.Rows[fila].Cells[1].Value.ToString();
         }
         public void CargarDGV()
         {
