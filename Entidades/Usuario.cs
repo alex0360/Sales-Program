@@ -1,7 +1,5 @@
-﻿namespace Entidades
-{
-    public class Usuario
-    {
+﻿namespace Entidades {
+    public class Usuario {
         //USUARIO varchar no	15
         //CLAVE varchar no	15
 

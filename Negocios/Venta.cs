@@ -1,9 +1,5 @@
-﻿using System;
-
-namespace Negocios
-{
-    public class Venta
-    {
+﻿namespace Negocios {
+    public class Venta {
         Datos.Venta obj;
         public void InsertarVentas(Entidades.Venta entidad) {
             obj = new Datos.Venta();
@@ -23,8 +19,7 @@ namespace Negocios
             return obj.ObtenerVentasClientes();
         }
 
-        public System.Data.DataTable MostrarBuscar(string textBuscar)
-        {
+        public System.Data.DataTable MostrarBuscar(string textBuscar) {
             obj = new Datos.Venta();
             return obj.MostrarBuscar(textBuscar);
         }

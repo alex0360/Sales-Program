@@ -1,17 +1,14 @@
 ﻿
 using System.Drawing;
 
-namespace Presentacion.Config
-{
-    public class Colores
-    {
+namespace Presentacion.Config {
+    public class Colores {
         public static Color Primary = System.Drawing.Color.FromArgb(253, 242, 209);
 
         public static Color Secudary = System.Drawing.Color.FromArgb(64, 112, 147);
     }
 
-    public static class ThemeColor
-    {
+    public static class ThemeColor {
         public static Color Primary { get; set; }
         public static Color Secondary { get; set; }
 
@@ -22,22 +19,19 @@ namespace Presentacion.Config
                 "#F9ACAC","#e0d68f","#07C7F2","#D9B5AD","#FCEF87","#F9DB49","#A7BDD9",
                 "#77ff77","#0094BC","#E4126B","#43B76E","#7BCFE9","#B71C46"
             };
-        public static Color ChangeColorBrightness(Color color, double correctionFactor)
-        {
+        public static Color ChangeColorBrightness(Color color, double correctionFactor) {
             double red = color.R;
             double green = color.G;
             double blue = color.B;
             //If correction factor is less than 0, darken color.
-            if (correctionFactor < 0)
-            {
+            if(correctionFactor < 0) {
                 correctionFactor = 1 + correctionFactor;
                 red *= correctionFactor;
                 green *= correctionFactor;
                 blue *= correctionFactor;
             }
             //If correction factor is greater than zero, lighten color.
-            else
-            {
+            else {
                 red = (255 - red) * correctionFactor + red;
                 green = (255 - green) * correctionFactor + green;
                 blue = (255 - blue) * correctionFactor + blue;

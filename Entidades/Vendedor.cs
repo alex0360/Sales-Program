@@ -1,7 +1,5 @@
-﻿namespace Entidades
-{
-    public class Vendedor
-    {
+﻿namespace Entidades {
+    public class Vendedor {
         //ID_VENDEDOR int no	4
         //NOMB_VENDEDOR varchar no	45
         //ID_JEFE int no	4

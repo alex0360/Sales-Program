@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Text;
-using System.IO;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.IO;
+using System.Text;
 
-namespace Negocios
-{
-    public class Ticket
-    {
+namespace Negocios {
+    public class Ticket {
         public static System.Drawing.Font printFont;
         public static StreamReader streamToPrint;
 
@@ -21,105 +19,92 @@ namespace Negocios
 
         public byte[] Serverbyte { get; private set; }
 
-        public static string LineasGuion()
-        {
+        public static string LineasGuion() {
             string LineaGuion = "----------------------------------------";   // agrega lineas separadoras -
 
             return line.AppendLine(LineaGuion).ToString();
         }
 
 
-        public static void EncabezadoVenta()
-        {
+        public static void EncabezadoVenta() {
             string LineEncavesado = "Articulo          Cant   P.Unit   Valor";   // 40 caracteres agrega lineas de  encabezados
             line.AppendLine(LineEncavesado);
         }
         public void TextoIzquierda(string par1)                          // agrega texto a la izquierda
         {
             max = par1.Length;
-            if (max > 40)                                 // **********
+            if(max > 40)                                 // **********
             {
                 cort = max - 40;
                 parte1 = par1.Remove(40, cort);        // si es mayor que 40 caracteres, lo corta
-            }
-            else { parte1 = par1; }                      // **********
+            } else { parte1 = par1; }                      // **********
             line.AppendLine(ticket = parte1);
 
         }
-        public void TextoDerecha(string par1)
-        {
+        public void TextoDerecha(string par1) {
             ticket = "";
             max = par1.Length;
-            if (max > 40)                                 // **********
+            if(max > 40)                                 // **********
             {
                 cort = max - 40;
                 parte1 = par1.Remove(40, cort);           // si es mayor que 40 caracteres, lo corta
-            }
-            else { parte1 = par1; }                      // **********
+            } else { parte1 = par1; }                      // **********
             max = 40 - par1.Length;                     // obtiene la cantidad de espacios para llegar a 40
-            for (int i = 0; i < max; i++)
-            {
+            for(int i = 0; i < max; i++) {
                 ticket += " ";                          // agrega espacios para alinear a la derecha
             }
             line.AppendLine(ticket += parte1 + "\n");                //Agrega el texto
 
         }
-        public void TextoCentro(string par1)
-        {
+        public void TextoCentro(string par1) {
             ticket = "";
             max = par1.Length;
-            if (max > 40)                                 // **********
+            if(max > 40)                                 // **********
             {
                 cort = max - 40;
                 parte1 = par1.Remove(40, cort);          // si es mayor que 40 caracteres, lo corta
-            }
-            else { parte1 = par1; }                      // **********
+            } else { parte1 = par1; }                      // **********
             max = (int)(40 - parte1.Length) / 2;         // saca la cantidad de espacios libres y divide entre dos
-            for (int i = 0; i < max; i++)                // **********
+            for(int i = 0; i < max; i++)                // **********
             {
                 ticket += " ";                           // Agrega espacios antes del texto a centrar
             }                                            // **********
             line.AppendLine(ticket += parte1 + "\n");
 
         }
-        public void TextoExtremos(string par1, string par2)
-        {
+        public void TextoExtremos(string par1, string par2) {
             max = par1.Length;
-            if (max > 18)                                 // **********
+            if(max > 18)                                 // **********
             {
                 cort = max - 18;
                 parte1 = par1.Remove(18, cort);          // si par1 es mayor que 18 lo corta
-            }
-            else { parte1 = par1; }                      // **********
+            } else { parte1 = par1; }                      // **********
             ticket = parte1;                             // agrega el primer parametro
             max = par2.Length;
-            if (max > 18)                                 // **********
+            if(max > 18)                                 // **********
             {
                 cort = max - 18;
                 parte2 = par2.Remove(18, cort);          // si par2 es mayor que 18 lo corta
-            }
-            else { parte2 = par2; }
+            } else { parte2 = par2; }
             max = 40 - (parte1.Length + parte2.Length);
-            for (int i = 0; i < max; i++)                 // **********
+            for(int i = 0; i < max; i++)                 // **********
             {
                 ticket += " ";                            // Agrega espacios para poner par2 al final
             }                                             // **********
             line.AppendLine(ticket += parte2 + "\n");                   // agrega el segundo parametro al final
 
         }
-        public void AgregaTotales(string param, double total)
-        {
+        public void AgregaTotales(string param, double total) {
             max = param.Length;
-            if (max > 25)                                 // **********
+            if(max > 25)                                 // **********
             {
                 cort = max - 25;
                 parte1 = param.Remove(25, cort);          // si es mayor que 25 lo corta
-            }
-            else { parte1 = param; }                      // **********
+            } else { parte1 = param; }                      // **********
             ticket = parte1;
             parte2 = total.ToString() + "$";
             max = 40 - (parte1.Length + parte2.Length);
-            for (int i = 0; i < max; i++)                // **********
+            for(int i = 0; i < max; i++)                // **********
             {
                 ticket += " ";                           // Agrega espacios para poner el valor de moneda al final
             }                                            // **********
@@ -128,22 +113,20 @@ namespace Negocios
         }
 
         // se le pasan los Aticulos  con sus detalles
-        public void AgregaArticulo(string articulo,  int cantidad, double precio, double subtotal)
-        {
-            if (cantidad.ToString().Length <= 3 && precio.ToString("c").Length <= 10 && subtotal.ToString("c").Length <= 11) // valida que cant precio y total esten dentro de rango
+        public void AgregaArticulo(string articulo, int cantidad, double precio, double subtotal) {
+            if(cantidad.ToString().Length <= 3 && precio.ToString("c").Length <= 10 && subtotal.ToString("c").Length <= 11) // valida que cant precio y total esten dentro de rango
             {
                 string elementos = "", espacios = "";
                 bool bandera = false;
                 int nroEspacios = 0;
 
-                if (articulo.Length > 40)                                 // **********
+                if(articulo.Length > 40)                                 // **********
                 {
                     //cort = max - 16;
                     //parte1 = Articulo.Remove(16, cort);          // corta a 16 la descripcion del articulo
                     nroEspacios = (3 - cantidad.ToString().Length);
                     espacios = "";
-                    for (int i = 0; i < nroEspacios; i++)
-                    {
+                    for(int i = 0; i < nroEspacios; i++) {
                         espacios += " ";
                     }
                     elementos += espacios + cantidad.ToString();
@@ -152,8 +135,7 @@ namespace Negocios
                     nroEspacios = (10 - precio.ToString().Length);
                     espacios = "";
 
-                    for (int i = 0; i < nroEspacios; i++)
-                    {
+                    for(int i = 0; i < nroEspacios; i++) {
                         espacios += " ";
                     }
                     elementos += espacios + precio.ToString();
@@ -162,22 +144,17 @@ namespace Negocios
                     nroEspacios = (11 - subtotal.ToString().Length);
                     espacios = "";
 
-                    for (int i = 0; i < nroEspacios; i++)
-                    {
+                    for(int i = 0; i < nroEspacios; i++) {
                         espacios += " ";
                     }
                     elementos += espacios + subtotal.ToString();
 
                     int CaracterActual = 0;// indica en que caracter se quedo
-                    for (int Longtext = articulo.Length; Longtext > 16; Longtext++)
-                    {
-                        if (bandera == false)
-                        {
+                    for(int Longtext = articulo.Length; Longtext > 16; Longtext++) {
+                        if(bandera == false) {
                             line.AppendLine(articulo.Substring(CaracterActual, 16) + elementos);
                             bandera = true;
-                        }
-                        else
-                        {
+                        } else {
                             line.AppendLine(articulo.Substring(CaracterActual, 16));
 
                         }
@@ -186,19 +163,15 @@ namespace Negocios
                     line.AppendLine(articulo.Substring(CaracterActual, articulo.Length - CaracterActual));
 
 
-                }
-                else
-                {
-                    for (int i = 0; i < (16 - articulo.Length); i++)
-                    {
+                } else {
+                    for(int i = 0; i < (16 - articulo.Length); i++) {
                         espacios += " ";
 
                     }
                     elementos = articulo + espacios;
                     nroEspacios = (3 - cantidad.ToString().Length);
                     espacios = "";
-                    for (int i = 0; i < nroEspacios; i++)
-                    {
+                    for(int i = 0; i < nroEspacios; i++) {
                         espacios += " ";
                     }
                     elementos += espacios + cantidad.ToString();
@@ -207,8 +180,7 @@ namespace Negocios
                     nroEspacios = (10 - precio.ToString().Length);
                     espacios = "";
 
-                    for (int i = 0; i < nroEspacios; i++)
-                    {
+                    for(int i = 0; i < nroEspacios; i++) {
                         espacios += " ";
                     }
                     elementos += espacios + precio.ToString();
@@ -217,35 +189,29 @@ namespace Negocios
                     nroEspacios = (11 - subtotal.ToString().Length);
                     espacios = "";
 
-                    for (int i = 0; i < nroEspacios; i++)
-                    {
+                    for(int i = 0; i < nroEspacios; i++) {
                         espacios += " ";
                     }
                     elementos += espacios + subtotal.ToString();
                     line.AppendLine(elementos);
 
                 }
-            }
-            else
-            {
+            } else {
                 //  MessageBox.Show("Valores fuera de rango");
 
             }
         }
 
-        public void ImprimirTiket(string Impresora = "Microsoft Print to PDF")
-        {
+        public void ImprimirTiket(string Impresora = "Microsoft Print to PDF") {
             File.WriteAllText("Factura.txt", line.ToString());
 
 
             line = new StringBuilder();
 
-            try
-            {
+            try {
                 streamToPrint = new StreamReader
                    ("Factura.txt");
-                try
-                {
+                try {
                     printFont = new System.Drawing.Font("Arial", 10);
                     PrintDocument pd = new PrintDocument();
                     pd.PrintPage += new PrintPageEventHandler
@@ -258,21 +224,16 @@ namespace Negocios
                     pd.DocumentName = "Factura" + DateTime.Now.ToString();
 
                     pd.Print();
-                }
-                finally
-                {
+                } finally {
                     streamToPrint.Close();
                 }
-            }
-            catch (Exception)
-            {
+            } catch(Exception) {
                 throw;
             }
 
 
         }
-        public void pd_PrintPage(object sender, PrintPageEventArgs ev)
-        {
+        public void pd_PrintPage(object sender, PrintPageEventArgs ev) {
             float linesPerPage = 0;
             float yPos = 0;
             int count = 0;
@@ -287,9 +248,8 @@ namespace Negocios
                printFont.GetHeight(ev.Graphics);
 
             // Print each line of the file.
-            while (count < linesPerPage &&
-               ((line = streamToPrint.ReadLine()) != null))
-            {
+            while(count < linesPerPage &&
+               ((line = streamToPrint.ReadLine()) != null)) {
                 yPos = topMargin + (count *
                    printFont.GetHeight(ev.Graphics));
                 ev.Graphics.DrawString(line, printFont, Brushes.Black,
@@ -299,7 +259,7 @@ namespace Negocios
             }
 
             // If more lines exist, print another page.
-            if (line != null)
+            if(line != null)
                 ev.HasMorePages = true;
             else
                 ev.HasMorePages = false;

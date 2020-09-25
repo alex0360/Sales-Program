@@ -1,27 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Negocios
-{
-    public class ClienteReport
-    {
+namespace Negocios {
+    public class ClienteReport {
         public List<Entidades.Cliente> Clientes { get; set; }
 
 
-        public object CreateReport()
-        {
+        public object CreateReport() {
             var listCliente = new Datos.Cliente();
             var result = listCliente.Mostrar();
 
             var i = result.Tables[0].Columns.Count;
             Clientes = new List<Entidades.Cliente>();
-            foreach (System.Data.DataRow rows in result.Tables[0].Rows)
-            {
-                var ClienteModel = new Entidades.Cliente()
-                {
+            foreach(System.Data.DataRow rows in result.Tables[0].Rows) {
+                var ClienteModel = new Entidades.Cliente() {
                     IdCliente = Convert.ToInt32(rows[0]),
                     NombreCliente = Convert.ToString(rows[1]),
                     Direccion = Convert.ToString(rows[2]),

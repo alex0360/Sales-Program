@@ -3,14 +3,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace Presentacion.Config
-{
-    public class IsNumero
-    {
-        public static void SoloNumeros(KeyPressEventArgs keyPressEventArgs)
-        {
-            if (Char.IsNumber(keyPressEventArgs.KeyChar))
-            {
+namespace Presentacion.Config {
+    public class IsNumero {
+        public static void SoloNumeros(KeyPressEventArgs keyPressEventArgs) {
+            if(Char.IsNumber(keyPressEventArgs.KeyChar)) {
                 keyPressEventArgs.Handled = true;
             }
         }
@@ -18,17 +14,13 @@ namespace Presentacion.Config
         private const char SignoDecimal = '.'; // Carácter separador decimal
         private static string _prevTextBoxValue; // Variable que almacena el valor anterior del Textbox
 
-        public static void textBox_TextChanged(object sender, EventArgs e)
-        {
+        public static void textBox_TextChanged(object sender, EventArgs e) {
             var textBox = (TextBox)sender;
             // Comprueba si el valor del TextBox se ajusta a un valor válido
-            if (Regex.IsMatch(textBox.Text, @"^(?:\d+\.?\d*)?$"))
-            {
+            if(Regex.IsMatch(textBox.Text, @"^(?:\d+\.?\d*)?$")) {
                 // Si es válido se almacena el valor actual en la variable privada
                 _prevTextBoxValue = textBox.Text;
-            }
-            else
-            {
+            } else {
                 // Si no es válido se recupera el valor de la variable privada con el valor anterior
                 // Calcula el nº de caracteres después del cursor para dejar el cursor en la misma posición
                 var charsAfterCursor = textBox.TextLength - textBox.SelectionStart - textBox.SelectionLength;
@@ -39,8 +31,7 @@ namespace Presentacion.Config
             }
         }
 
-        public static void textBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
+        public static void textBox_KeyPress(object sender, KeyPressEventArgs e) {
             var textBox = (TextBox)sender;
             // Si el carácter pulsado no es un carácter válido se anula
             e.Handled = !char.IsDigit(e.KeyChar) // No es dígito

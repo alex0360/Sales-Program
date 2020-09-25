@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Entidades
-{
-    public class ErrorAcceso
-    {
+namespace Entidades {
+    public class ErrorAcceso {
         //IdRegistro int no	4
         //usuario varchar no	15
         //fecha datetime    no	8

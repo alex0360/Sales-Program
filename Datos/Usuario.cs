@@ -2,40 +2,30 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Datos
-{
-    public class Usuario
-    {
+namespace Datos {
+    public class Usuario {
 
-        public bool ValidarUsuario(string usuario, string clave)
-        {
+        public bool ValidarUsuario(string usuario, string clave) {
             SqlDataReader sqlDataReader;
-            using (SqlCommand sqlCommand = new SqlCommand("Usp_ValidarUsuario", Conexion.SqlConnection))
-            {
-                try
-                {
-                    if (Conexion.SqlConnection.State == System.Data.ConnectionState.Closed) Conexion.SqlConnection.Open();
+            using(SqlCommand sqlCommand = new SqlCommand("Usp_ValidarUsuario", Conexion.SqlConnection)) {
+                try {
+                    if(Conexion.SqlConnection.State == System.Data.ConnectionState.Closed) Conexion.SqlConnection.Open();
                     sqlCommand.CommandType = CommandType.StoredProcedure;
                     sqlCommand.Parameters.AddWithValue("@usuario", usuario);
                     sqlCommand.Parameters.AddWithValue("@clave", clave);
 
                     sqlDataReader = sqlCommand.ExecuteReader();
 
-                    if (sqlDataReader.Read())
-                    {
+                    if(sqlDataReader.Read()) {
                         return true;
                     }
 
                     return false;
-                }
-                catch (Exception ex)
-                {
+                } catch(Exception ex) {
                     System.Windows.Forms.MessageBox.Show(ex.Message, "ERROR DE CONEXION");
                     System.Windows.Forms.Application.Exit();
                     return false;
-                }
-                finally
-                {
+                } finally {
                     //sqlDataReader.Close();
                     sqlCommand.Connection.Close();
                 }

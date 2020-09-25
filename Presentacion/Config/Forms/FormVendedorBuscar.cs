@@ -1,47 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Presentacion.Config.Forms
-{
-    public partial class FormVendedorBuscar : FormBaseBuscar
-    {
+namespace Presentacion.Config.Forms {
+    public partial class FormVendedorBuscar : FormBaseBuscar {
         string textBuscar;
         Negocios.Vendedor obj;
-        public FormVendedorBuscar(string param)
-        {
+        public FormVendedorBuscar(string param) {
             InitializeComponent();
             textBuscar = param;
         }
 
-        private void TextBox_Buscar_Enter(object sender, EventArgs e)
-        {
-            if (TextBox_Buscar.Text == "   Desc  o ID")
-            {
+        private void TextBox_Buscar_Enter(object sender, EventArgs e) {
+            if(TextBox_Buscar.Text == "   Desc  o ID") {
                 TextBox_Buscar.Text = string.Empty;
                 TextBox_Buscar.ForeColor = Color.Black;
             }
         }
 
-        private void TextBox_Buscar_Leave(object sender, EventArgs e)
-        {
-            if (TextBox_Buscar.Text == string.Empty)
-            {
+        private void TextBox_Buscar_Leave(object sender, EventArgs e) {
+            if(TextBox_Buscar.Text == string.Empty) {
                 TextBox_Buscar.Text = "   Desc  o ID";
                 TextBox_Buscar.ForeColor = Config.Colores.Secudary;
             }
         }
 
-        protected override void IconButton_Codigo_Click(object sender, EventArgs e)
-        {
-            if (TextBox_Buscar.Text != "   Desc  o ID")
-            {
+        protected override void IconButton_Codigo_Click(object sender, EventArgs e) {
+            if(TextBox_Buscar.Text != "   Desc  o ID") {
 
                 CargarValor();
                 Close();
@@ -53,10 +38,8 @@ namespace Presentacion.Config.Forms
             FormVenta.idVendedor = int.Parse(DGV_Data.Rows[fila].Cells[0].Value.ToString());
             FormVenta.VendedorNombre = DGV_Data.Rows[fila].Cells[1].Value.ToString();
         }
-        public void CargarDGV()
-        {
-            if (obj == null)
-            {
+        public void CargarDGV() {
+            if(obj == null) {
                 obj = new Negocios.Vendedor();
             }
             var data = obj.MostrarBuscar(textBuscar);
@@ -92,40 +75,30 @@ namespace Presentacion.Config.Forms
             DGV_Data.DataSource = data;
         }
 
-        protected override void FormBaseBuscar_Load(object sender, EventArgs e)
-        {
+        protected override void FormBaseBuscar_Load(object sender, EventArgs e) {
             CargarDGV();
         }
 
-        private void TextBox_Buscar_TextChanged(object sender, EventArgs e)
-        {
-            if (obj == null)
-            {
+        private void TextBox_Buscar_TextChanged(object sender, EventArgs e) {
+            if(obj == null) {
                 obj = new Negocios.Vendedor();
             }
             DGV_Data.DataSource = obj.MostrarBuscar(TextBox_Buscar.Text);
         }
 
         protected override void DGV_Data_CellDoubleClick(object sender, DataGridViewCellEventArgs e) => SelectToEditItem();
-        protected void SelectToEditItem()
-        {
-            try
-            {
+        protected void SelectToEditItem() {
+            try {
 
-                if (DGV_Data.Rows.Count != 0)
-                {
+                if(DGV_Data.Rows.Count != 0) {
                     CargarValor();
                     Close();
-                }
-                else
-                {
+                } else {
                     MessageBox.Show("Debe seleccionar un elemento de la lista",
                         "Información del Sistema",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch(Exception ex) {
                 MessageBox.Show(ex.Message, "Información del Sistema",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

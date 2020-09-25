@@ -3,14 +3,10 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
-namespace Datos
-{
-    public class Venta
-    {
-        public void InsertarVentas(Entidades.Venta entidad)
-        {
-            try
-            {
+namespace Datos {
+    public class Venta {
+        public void InsertarVentas(Entidades.Venta entidad) {
+            try {
                 SqlCommand sqlCommand = new SqlCommand("proc_VentasInsert", Conexion.SqlConnection);
                 sqlCommand.CommandTimeout = 20;
                 sqlCommand.CommandType = CommandType.StoredProcedure;
@@ -22,25 +18,19 @@ namespace Datos
                 sqlCommand.Parameters.AddWithValue("@ID_PROD", entidad.IdProduccto);
                 sqlCommand.Parameters.AddWithValue("@CANTIDAD", entidad.Cantidad);
 
-                if (Conexion.SqlConnection.State == System.Data.ConnectionState.Closed) Conexion.SqlConnection.Open();
+                if(Conexion.SqlConnection.State == System.Data.ConnectionState.Closed) Conexion.SqlConnection.Open();
                 sqlCommand.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
+            } catch(Exception ex) {
                 MessageBox.Show("No se pudo Escribir " + ex.Message, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            finally
-            {
-                if (Conexion.SqlConnection.State == System.Data.ConnectionState.Open) Conexion.SqlConnection.Close();
+            } finally {
+                if(Conexion.SqlConnection.State == System.Data.ConnectionState.Open) Conexion.SqlConnection.Close();
             }
 
         }
 
-        public DataSet ObtenerVentas()
-        {
-            try
-            {
-                if (Conexion.SqlConnection.State == System.Data.ConnectionState.Closed) Conexion.SqlConnection.Open();
+        public DataSet ObtenerVentas() {
+            try {
+                if(Conexion.SqlConnection.State == System.Data.ConnectionState.Closed) Conexion.SqlConnection.Open();
 
                 DataSet dataSet = new DataSet();
 
@@ -49,20 +39,15 @@ namespace Datos
                 sqlDataAdapter.Fill(dataSet, "VerRecord");
 
                 return dataSet;
-            }
-            catch (Exception ex)
-            {
+            } catch(Exception ex) {
                 MessageBox.Show("Hay problemas: " + ex.Message, "al Listar", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return null;
-            }
-            finally { if (Conexion.SqlConnection.State == System.Data.ConnectionState.Open) Conexion.SqlConnection.Close(); }
+            } finally { if(Conexion.SqlConnection.State == System.Data.ConnectionState.Open) Conexion.SqlConnection.Close(); }
         }
 
-        public void RebajarConceptos(Entidades.Venta entidad)
-        {
+        public void RebajarConceptos(Entidades.Venta entidad) {
 
-            try
-            {
+            try {
                 SqlCommand sqlCommand = new SqlCommand("proc_VentasRebajar", Conexion.SqlConnection);
                 sqlCommand.CommandTimeout = 20;
                 sqlCommand.CommandType = CommandType.StoredProcedure;
@@ -71,24 +56,18 @@ namespace Datos
                 sqlCommand.Parameters.AddWithValue("@CANTIDAD", entidad.Cantidad);
 
 
-                if (Conexion.SqlConnection.State == System.Data.ConnectionState.Closed) Conexion.SqlConnection.Open();
+                if(Conexion.SqlConnection.State == System.Data.ConnectionState.Closed) Conexion.SqlConnection.Open();
                 sqlCommand.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
+            } catch(Exception ex) {
                 MessageBox.Show("No se pudo Escribir " + ex.Message, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            finally
-            {
-                if (Conexion.SqlConnection.State == System.Data.ConnectionState.Open) Conexion.SqlConnection.Close();
+            } finally {
+                if(Conexion.SqlConnection.State == System.Data.ConnectionState.Open) Conexion.SqlConnection.Close();
             }
         }
 
-        public DataSet ObtenerVentasClientes()
-        {
-            try
-            {
-                if (Conexion.SqlConnection.State == System.Data.ConnectionState.Closed) Conexion.SqlConnection.Open();
+        public DataSet ObtenerVentasClientes() {
+            try {
+                if(Conexion.SqlConnection.State == System.Data.ConnectionState.Closed) Conexion.SqlConnection.Open();
 
                 DataSet dataSet = new DataSet();
 
@@ -97,31 +76,24 @@ namespace Datos
                 sqlDataAdapter.Fill(dataSet, "VerRecord");
 
                 return dataSet;
-            }
-            catch (Exception ex)
-            {
+            } catch(Exception ex) {
                 MessageBox.Show("Hay problemas: " + ex.Message, "al Listar", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return null;
-            }
-            finally { if (Conexion.SqlConnection.State == System.Data.ConnectionState.Open) Conexion.SqlConnection.Close(); }
+            } finally { if(Conexion.SqlConnection.State == System.Data.ConnectionState.Open) Conexion.SqlConnection.Close(); }
         }
 
         //proc_VentasObtenerFactura
-        public DataTable MostrarBuscar(string textBuscar)
-        {
+        public DataTable MostrarBuscar(string textBuscar) {
             DataTable tableResutado = new DataTable();
-            try
-            {
-                if (Conexion.SqlConnection.State == System.Data.ConnectionState.Closed) Conexion.SqlConnection.Open();
-                SqlCommand sqlCommand = new SqlCommand()
-                {
+            try {
+                if(Conexion.SqlConnection.State == System.Data.ConnectionState.Closed) Conexion.SqlConnection.Open();
+                SqlCommand sqlCommand = new SqlCommand() {
                     Connection = Conexion.SqlConnection,
                     CommandText = "proc_VentasObtenerFactura",
                     CommandType = CommandType.StoredProcedure
                 };
 
-                SqlParameter ParTextBuscar = new SqlParameter()
-                {
+                SqlParameter ParTextBuscar = new SqlParameter() {
                     ParameterName = "@textBuscar",
                     SqlDbType = SqlDbType.VarChar,
                     Size = 50,
@@ -130,14 +102,10 @@ namespace Datos
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
                 dataAdapter.Fill(tableResutado);
-            }
-            catch
-            {
+            } catch {
                 tableResutado = null;
-            }
-            finally
-            {
-                if (Conexion.SqlConnection.State == System.Data.ConnectionState.Open) Conexion.SqlConnection.Close();
+            } finally {
+                if(Conexion.SqlConnection.State == System.Data.ConnectionState.Open) Conexion.SqlConnection.Close();
             }
             return tableResutado;
         }

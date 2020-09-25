@@ -1,38 +1,24 @@
-﻿using FontAwesome.Sharp;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
+﻿using System;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Presentacion.Config
-{
-    public partial class FormBaseBuscar : Form
-    {
-        public FormBaseBuscar()
-        {
+namespace Presentacion.Config {
+    public partial class FormBaseBuscar : Form {
+        public FormBaseBuscar() {
             InitializeComponent();
             LoadTheme();
         }
 
-        private void IconButton_Cerrar_Click(object sender, EventArgs e)
-        {
+        private void IconButton_Cerrar_Click(object sender, EventArgs e) {
             Close();
         }
 
-        protected virtual void IconButton_Codigo_Click(object sender, EventArgs e)
-        {
+        protected virtual void IconButton_Codigo_Click(object sender, EventArgs e) {
 
         }
 
         #region Mover_Ventana
-        private void Panel_Titulo_MouseMove(object sender, MouseEventArgs e)
-        {
+        private void Panel_Titulo_MouseMove(object sender, MouseEventArgs e) {
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
@@ -43,24 +29,19 @@ namespace Presentacion.Config
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
         #endregion
 
-        protected virtual void DGV_Data_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
+        protected virtual void DGV_Data_CellContentClick(object sender, DataGridViewCellEventArgs e) {
 
         }
 
-        protected virtual void DGV_Data_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
+        protected virtual void DGV_Data_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
 
         }
 
-        protected void LoadTheme()
-        {
+        protected void LoadTheme() {
 
-            foreach (Control control in this.Controls)
-            {
+            foreach(Control control in this.Controls) {
                 DataGridView dataGridView;
-                if (control.GetType() == typeof(DataGridView))
-                {
+                if(control.GetType() == typeof(DataGridView)) {
                     dataGridView = (DataGridView)control;
                     dataGridView.RowsDefaultCellStyle.SelectionBackColor = ThemeColor.ChangeColorBrightness(ThemeColor.Secondary, -0.5);
 
@@ -76,8 +57,7 @@ namespace Presentacion.Config
             }
         }
 
-        protected virtual void FormBaseBuscar_Load(object sender, EventArgs e)
-        {
+        protected virtual void FormBaseBuscar_Load(object sender, EventArgs e) {
 
         }
     }

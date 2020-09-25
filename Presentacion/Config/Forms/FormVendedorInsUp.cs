@@ -1,45 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Presentacion.Config.Forms
-{
-    public partial class FormVendedorInsUp : FormBaseInsetUpdate
-    {
+namespace Presentacion.Config.Forms {
+    public partial class FormVendedorInsUp : FormBaseInsetUpdate {
         Negocios.Vendedor objNegocio;
         Entidades.Vendedor objEntidad;
 
         int id = 0;
         bool changed = true;
-        public FormVendedorInsUp()
-        {
+        public FormVendedorInsUp() {
             InitializeComponent();
             id = 0;
-        }        
-        public FormVendedorInsUp(int id)
-        {
+        }
+        public FormVendedorInsUp(int id) {
             InitializeComponent();
             this.id = id;
             CargarData();
         }
 
-        private void CargarData()
-        {
-            if (objNegocio == null)
-            {
+        private void CargarData() {
+            if(objNegocio == null) {
                 objNegocio = new Negocios.Vendedor();
             }
             var data = objNegocio.Buscar(id);
 
             //luego de buscar el codigo del cliente
             //valida si existe el codigo del cliente
-            if (data.Rows.Count > 0)  //si es mayor que cero, significa que lo encontro
+            if(data.Rows.Count > 0)  //si es mayor que cero, significa que lo encontro
             {
                 TB_Nombre.Text = Convert.ToString(data.Rows[0][1]);
                 TB_Oficina.Text = Convert.ToString(data.Rows[0][3]);
@@ -52,68 +40,54 @@ namespace Presentacion.Config.Forms
         }
 
         #region Eventos Enter y Leave
-        private void TB_Nombre_Enter(object sender, EventArgs e)
-        {
-            if (TB_Nombre.Text == "   Nombre")
-            {
+        private void TB_Nombre_Enter(object sender, EventArgs e) {
+            if(TB_Nombre.Text == "   Nombre") {
                 TB_Nombre.Text = string.Empty;
                 TB_Nombre.ForeColor = Color.Black;
             }
         }
 
-        private void TB_Nombre_Leave(object sender, EventArgs e)
-        {
-            if (TB_Nombre.Text == string.Empty)
-            {
+        private void TB_Nombre_Leave(object sender, EventArgs e) {
+            if(TB_Nombre.Text == string.Empty) {
                 TB_Nombre.Text = "   Nombre";
                 TB_Nombre.ForeColor = Config.Colores.Secudary;
             }
         }
 
-        private void TB_Oficina_Enter(object sender, EventArgs e)
-        {
-            if (TB_Oficina.Text == "   Oficina")
-            {
+        private void TB_Oficina_Enter(object sender, EventArgs e) {
+            if(TB_Oficina.Text == "   Oficina") {
                 TB_Oficina.Text = string.Empty;
                 TB_Oficina.ForeColor = Color.Black;
             }
         }
 
-        private void TB_Oficina_Leave(object sender, EventArgs e)
-        {
-            if (TB_Oficina.Text == string.Empty)
-            {
+        private void TB_Oficina_Leave(object sender, EventArgs e) {
+            if(TB_Oficina.Text == string.Empty) {
                 TB_Oficina.Text = "   Oficina";
                 TB_Oficina.ForeColor = Config.Colores.Secudary;
             }
         }
 
-        private void TB_KeyPress(object sender, KeyPressEventArgs e)
-        {
+        private void TB_KeyPress(object sender, KeyPressEventArgs e) {
             Config.IsNumero.textBox_KeyPress(sender, e);
         }
-        private void TB_TextChanged(object sender, EventArgs e)
-        {
-            if (changed == false)
+        private void TB_TextChanged(object sender, EventArgs e) {
+            if(changed == false)
                 changed = true;
             else
                 Config.IsNumero.textBox_TextChanged(sender, e);
         }
-     
-        private void TB_Comision_Enter(object sender, EventArgs e)
-        {
-            if (TB_Comision.Text == "   Comision")
-            {
+
+        private void TB_Comision_Enter(object sender, EventArgs e) {
+            if(TB_Comision.Text == "   Comision") {
                 changed = false;
                 TB_Comision.Text = string.Empty;
                 TB_Comision.ForeColor = Color.Black;
             }
         }
 
-        private void TB_Comision_Leave(object sender, EventArgs e)
-        {
-            if (TB_Comision.Text == string.Empty)
-            {
+        private void TB_Comision_Leave(object sender, EventArgs e) {
+            if(TB_Comision.Text == string.Empty) {
                 changed = false;
                 TB_Comision.Text = "   Comision";
                 TB_Comision.ForeColor = Config.Colores.Secudary;
@@ -122,61 +96,48 @@ namespace Presentacion.Config.Forms
         #endregion
 
         #region Click
-        protected override void IconButton_Guardar_Click(object sender, EventArgs e)
-        {
-            if (TB_Nombre.Text != "   Nombre" && TB_Oficina.Text != "   Oficina" && TB_Comision.Text != "   Comision")
-            {
-                if (objNegocio == null)
-                {
+        protected override void IconButton_Guardar_Click(object sender, EventArgs e) {
+            if(TB_Nombre.Text != "   Nombre" && TB_Oficina.Text != "   Oficina" && TB_Comision.Text != "   Comision") {
+                if(objNegocio == null) {
                     objNegocio = new Negocios.Vendedor();
                 }
                 var validar = objNegocio.ValidarRecord(id);
 
-                if (validar)
+                if(validar)
                     Actualizar();
                 else
                     Agregar();
-            }
-            else
-            {
+            } else {
                 ErrorData();
             }
         }
 
-        private void ErrorData()
-        {
-            if (TB_Nombre.Text == "   Nombre")
-            {
+        private void ErrorData() {
+            if(TB_Nombre.Text == "   Nombre") {
                 TB_Nombre.ForeColor = Color.Red;
             }
 
-            if (TB_Oficina.Text == "   Oficina")
-            {
+            if(TB_Oficina.Text == "   Oficina") {
                 TB_Oficina.ForeColor = Color.Red;
             }
 
-            if (TB_Comision.Text == "   Comision")
-            {
+            if(TB_Comision.Text == "   Comision") {
                 TB_Comision.ForeColor = Color.Red;
             }
 
             Timer_Error.Start();
 
         }
-        private void Timer_Error_Tick(object sender, EventArgs e)
-        {
-            if (TB_Nombre.Text == "   Nombre" || TB_Nombre.Text == string.Empty)
-            {
+        private void Timer_Error_Tick(object sender, EventArgs e) {
+            if(TB_Nombre.Text == "   Nombre" || TB_Nombre.Text == string.Empty) {
                 TB_Nombre.ForeColor = Config.Colores.Secudary;
             }
 
-            if (TB_Oficina.Text == "   Oficina" || TB_Oficina.Text == string.Empty)
-            {
+            if(TB_Oficina.Text == "   Oficina" || TB_Oficina.Text == string.Empty) {
                 TB_Oficina.ForeColor = Config.Colores.Secudary;
             }
 
-            if (TB_Comision.Text == "   Comision" || TB_Comision.Text == string.Empty)
-            {
+            if(TB_Comision.Text == "   Comision" || TB_Comision.Text == string.Empty) {
                 TB_Comision.ForeColor = Config.Colores.Secudary;
             }
 
@@ -184,22 +145,18 @@ namespace Presentacion.Config.Forms
         }
         protected override void IconButton_Clear_Click(object sender, EventArgs e) => Clear();
 
-        private void Clear()
-        {
-            if (TB_Nombre.Text != string.Empty)
-            {
+        private void Clear() {
+            if(TB_Nombre.Text != string.Empty) {
                 TB_Nombre.Text = "   Nombre";
                 TB_Nombre.ForeColor = Config.Colores.Secudary;
             }
 
-            if (TB_Oficina.Text != string.Empty)
-            {
+            if(TB_Oficina.Text != string.Empty) {
                 TB_Oficina.Text = "   Oficina";
                 TB_Oficina.ForeColor = Config.Colores.Secudary;
             }
 
-            if (TB_Comision.Text != string.Empty)
-            {
+            if(TB_Comision.Text != string.Empty) {
                 changed = false;
                 TB_Comision.Text = "   Comision";
                 TB_Comision.ForeColor = Config.Colores.Secudary;
@@ -207,10 +164,8 @@ namespace Presentacion.Config.Forms
         }
         #endregion
 
-        private void Actualizar()
-        {
-            if (objEntidad == null)
-            {
+        private void Actualizar() {
+            if(objEntidad == null) {
                 objEntidad = new Entidades.Vendedor();
             }
             objEntidad.IdVendedor = id;
@@ -218,8 +173,7 @@ namespace Presentacion.Config.Forms
             objEntidad.Oficina = TB_Oficina.Text;
             objEntidad.Comision = float.Parse(TB_Comision.Text);
 
-            if (objNegocio == null)
-            {
+            if(objNegocio == null) {
                 objNegocio = new Negocios.Vendedor();
             }
             objNegocio.Actualizar(objEntidad);
@@ -231,18 +185,15 @@ namespace Presentacion.Config.Forms
             Close();
         }
 
-        private void Agregar()
-        {
-            if (objEntidad == null)
-            {
+        private void Agregar() {
+            if(objEntidad == null) {
                 objEntidad = new Entidades.Vendedor();
             }
             objEntidad.NombreVendedor = TB_Nombre.Text;
             objEntidad.Oficina = TB_Oficina.Text;
             objEntidad.Comision = float.Parse(TB_Comision.Text);
 
-            if (objNegocio == null)
-            {
+            if(objNegocio == null) {
                 objNegocio = new Negocios.Vendedor();
             }
             objNegocio.Registrar(objEntidad);

@@ -1,7 +1,5 @@
-﻿namespace Entidades
-{
-    public class Fabricante
-    {
+﻿namespace Entidades {
+    public class Fabricante {
         //ID_FABRICANTE int no	4
         //NOMB_FABRICANTE varchar no	30
         //DIRECCION varchar no	60

@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Entidades
-{
-    public class VentaDetalle
-    {
+namespace Entidades {
+    public class VentaDetalle {
         public string Factura { get; set; }
         public DateTime Fecha { get; set; }
         public int Cantidad { get; set; }

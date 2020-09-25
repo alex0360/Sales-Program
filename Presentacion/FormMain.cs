@@ -4,33 +4,28 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace Presentacion
-{
-    public partial class FormMain : Form
-    {
+namespace Presentacion {
+    public partial class FormMain : Form {
         //Fields
         private Random random;
         private int tempIndex;
         private IconButton currentButton;
         private Form activeForm;
 
-        public FormMain()
-        {
+        public FormMain() {
             InitializeComponent();
             Constructor();
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
         }
 
-        public FormMain(string usuario)
-        {
+        public FormMain(string usuario) {
             InitializeComponent();
             L_UsuarioConectado.Text = string.Format("Usuario Conectado: {0}", usuario);
             Constructor();
             Console.Write("Hola Mundo");
         }
 
-        private void Constructor()
-        {
+        private void Constructor() {
             random = new Random();
             CustomizeDesign();
             B_CloseChildForm.Visible = false;
@@ -40,70 +35,58 @@ namespace Presentacion
         }
 
         #region SubMenu
-        private void CustomizeDesign()
-        {
+        private void CustomizeDesign() {
             P_SubMantenimiento.Visible = false;
             P_SubVenta.Visible = false;
         }
 
-        private void HideSubMenu()
-        {
-            if (P_SubMantenimiento.Visible == true)
+        private void HideSubMenu() {
+            if(P_SubMantenimiento.Visible == true)
                 P_SubMantenimiento.Visible = false;
-            if (P_SubVenta.Visible == true)
+            if(P_SubVenta.Visible == true)
                 P_SubVenta.Visible = false;
         }
 
-        private void ShowSubMenu(System.Windows.Forms.Panel subMenu)
-        {
-            if (subMenu.Visible == false)
-            {
+        private void ShowSubMenu(System.Windows.Forms.Panel subMenu) {
+            if(subMenu.Visible == false) {
                 HideSubMenu();
                 subMenu.Visible = true;
-            }
-            else subMenu.Visible = false;
+            } else subMenu.Visible = false;
 
         }
         #endregion
         #region Sub_Menu_Mantenimento
-        private void IB_Mantenimiento_Click(object sender, EventArgs e)
-        {
+        private void IB_Mantenimiento_Click(object sender, EventArgs e) {
             ShowSubMenu(P_SubMantenimiento);
         }
 
-        private void IB_Cliente_Click(object sender, EventArgs e)
-        {
+        private void IB_Cliente_Click(object sender, EventArgs e) {
             OpenChildForm(new Config.Forms.FormCliente(), sender, P_SubMantenimiento);
             //HideSubMenu();
         }
 
-        private void IB_Fabricante_Click(object sender, EventArgs e)
-        {
+        private void IB_Fabricante_Click(object sender, EventArgs e) {
             OpenChildForm(new Config.Forms.FormFabricante(), sender, P_SubMantenimiento);
             //HideSubMenu();
         }
 
-        private void IB_Producto_Click(object sender, EventArgs e)
-        {
+        private void IB_Producto_Click(object sender, EventArgs e) {
             OpenChildForm(new Config.Forms.FormProducto(), sender, P_SubMantenimiento);
             //HideSubMenu();
         }
 
-        private void IB_Vendedor_Click(object sender, EventArgs e)
-        {
+        private void IB_Vendedor_Click(object sender, EventArgs e) {
             OpenChildForm(new Config.Forms.FormVendedor(), sender, P_SubMantenimiento);
             //HideSubMenu();
         }
         #endregion
 
-        private void IB_Venta_Click(object sender, EventArgs e)
-        {
+        private void IB_Venta_Click(object sender, EventArgs e) {
             ShowSubMenu(P_SubVenta);
         }
 
         #region Mover_Ventana
-        private void P_Titulo_MouseDown(object sender, MouseEventArgs e)
-        {
+        private void P_Titulo_MouseDown(object sender, MouseEventArgs e) {
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
@@ -113,8 +96,7 @@ namespace Presentacion
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
         #endregion
 
-        private void B_CloseChildForm_Click(object sender, EventArgs e)
-        {
+        private void B_CloseChildForm_Click(object sender, EventArgs e) {
             Reset(P_SubMantenimiento);
             Reset(P_SubVenta);
         }
@@ -125,38 +107,33 @@ namespace Presentacion
 
         private void B_Minimizar_Click(object sender, EventArgs e) => this.WindowState = FormWindowState.Minimized;
 
-        private void B_Maximizar_Click(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Normal)
+        private void B_Maximizar_Click(object sender, EventArgs e) {
+            if(WindowState == FormWindowState.Normal)
                 this.WindowState = FormWindowState.Maximized;
             else
                 this.WindowState = FormWindowState.Normal;
         }
 
-        private void FormMain_Resize(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Maximized)
+        private void FormMain_Resize(object sender, EventArgs e) {
+            if(WindowState == FormWindowState.Maximized)
                 this.FormBorderStyle = FormBorderStyle.None;
             else
                 this.FormBorderStyle = FormBorderStyle.Sizable;
         }
 
-        private void P_DesktopPane_Paint(object sender, PaintEventArgs e)
-        {
+        private void P_DesktopPane_Paint(object sender, PaintEventArgs e) {
 
         }
 
-        private void T_FechaHora_Tick(object sender, EventArgs e)
-        {
+        private void T_FechaHora_Tick(object sender, EventArgs e) {
             L_Fecha.Text = string.Format("Fecha: {0}", DateTime.Now.ToString("dd/MM/yyyy"));
             L_Hora.Text = string.Format("Hora: {0}", DateTime.Now.ToString("hh:mm:ss"));
 
         }
 
         #region Cambiar Temas
-        public void OpenChildForm(Form childForm, object btnSender, Panel subPanel)
-        {
-            if (activeForm != null)
+        public void OpenChildForm(Form childForm, object btnSender, Panel subPanel) {
+            if(activeForm != null)
                 activeForm.Close();
             ActivateButton(btnSender, subPanel);
             activeForm = childForm;
@@ -169,11 +146,9 @@ namespace Presentacion
             childForm.Show();
             L_Titulo.Text = childForm.Text;
         }
-        private Color SelectThemeColor(IconButton currentButton)
-        {
+        private Color SelectThemeColor(IconButton currentButton) {
             int index = random.Next(Config.ThemeColor.ColorList.Count);
-            while (tempIndex == index)
-            {
+            while(tempIndex == index) {
                 index = random.Next(Config.ThemeColor.ColorList.Count);
             }
             tempIndex = index;
@@ -181,12 +156,9 @@ namespace Presentacion
             return ColorTranslator.FromHtml(color);
         }
 
-        private void ActivateButton(object btnSender, Panel subPanel)
-        {
-            if (btnSender != null)
-            {
-                if (currentButton != (IconButton)btnSender)
-                {
+        private void ActivateButton(object btnSender, Panel subPanel) {
+            if(btnSender != null) {
+                if(currentButton != (IconButton)btnSender) {
                     DisableButton(subPanel);
                     Color color = SelectThemeColor(currentButton);
                     currentButton = (IconButton)btnSender;
@@ -203,12 +175,9 @@ namespace Presentacion
             }
         }
 
-        public static void DisableButton(Panel subPanel)
-        {
-            foreach (Control previousBtn in subPanel.Controls)
-            {
-                if (previousBtn.GetType() == typeof(IconButton))
-                {
+        public static void DisableButton(Panel subPanel) {
+            foreach(Control previousBtn in subPanel.Controls) {
+                if(previousBtn.GetType() == typeof(IconButton)) {
                     previousBtn.BackColor = Color.FromArgb(64, 112, 147);
                     previousBtn.ForeColor = Color.Black;
                     previousBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -216,9 +185,8 @@ namespace Presentacion
             }
         }
 
-        public void Reset(Panel subPanel)
-        {
-            if (activeForm != null)
+        public void Reset(Panel subPanel) {
+            if(activeForm != null)
                 activeForm.Close();
             DisableButton(subPanel);
             L_Titulo.Text = "INICIO";
@@ -229,20 +197,15 @@ namespace Presentacion
         }
         #endregion
 
-        private void IconButton_Ayuda_Click(object sender, EventArgs e)
-        {
-            try
-            {
+        private void IconButton_Ayuda_Click(object sender, EventArgs e) {
+            try {
                 System.Diagnostics.Process.Start(System.Windows.Forms.Application.StartupPath + @"..\..\..\Ayuda\info.pdf");
-            }
-            catch
-            {
+            } catch {
                 try { System.Diagnostics.Process.Start(System.Windows.Forms.Application.StartupPath + @"info.pdf"); } catch { }
             }
         }
 
-        private void IconButton_Venta_Click(object sender, EventArgs e)
-        {
+        private void IconButton_Venta_Click(object sender, EventArgs e) {
             OpenChildForm(new FormVenta(), sender, P_SubVenta);
         }
     }

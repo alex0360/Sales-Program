@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-
-namespace Entidades
-{
-    public class Cliente
-    {
+﻿namespace Entidades {
+    public class Cliente {
         //ID_CLIENTE int no	4
         //NOMB_CLIENTE varchar no	45
         //DIRECCION varchar no	60

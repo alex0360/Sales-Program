@@ -3,21 +3,17 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Presentacion.Config
-{
-    public class Tema
-    {
+namespace Presentacion.Config {
+    public class Tema {
         private Random random;
         private int tempIndex;
 
-        public Tema()
-        {
+        public Tema() {
             random = new Random();
         }
 
-        public Form OpenChildForm(Form activeForm, Form childForm, object btnSender, Panel P_DesktopPane, Panel subPanel, IconButton currentButton, Panel Panel_Titulo = null, Panel Panel_Logo = null, Button Button_Deshabilitar = null)
-        {
-            if (activeForm != null)
+        public Form OpenChildForm(Form activeForm, Form childForm, object btnSender, Panel P_DesktopPane, Panel subPanel, IconButton currentButton, Panel Panel_Titulo = null, Panel Panel_Logo = null, Button Button_Deshabilitar = null) {
+            if(activeForm != null)
                 activeForm.Close();
             ActivateButton(btnSender, subPanel, currentButton, Panel_Titulo, Panel_Logo, Button_Deshabilitar);
             activeForm = childForm;
@@ -33,11 +29,9 @@ namespace Presentacion.Config
             return activeForm;
         }
 
-        private Color SelectThemeColor(IconButton currentButton)
-        {
+        private Color SelectThemeColor(IconButton currentButton) {
             int index = random.Next(Config.ThemeColor.ColorList.Count);
-            while (tempIndex == index)
-            {
+            while(tempIndex == index) {
                 index = random.Next(Config.ThemeColor.ColorList.Count);
             }
             tempIndex = index;
@@ -45,12 +39,9 @@ namespace Presentacion.Config
             return ColorTranslator.FromHtml(color);
         }
 
-        private void ActivateButton(object btnSender, Panel subPanel, IconButton currentButton, Panel Panel_Titulo = null, Panel Panel_Logo = null, Button Button_Deshabilitar = null)
-        {
-            if (btnSender != null)
-            {
-                if (currentButton != (IconButton)btnSender)
-                {
+        private void ActivateButton(object btnSender, Panel subPanel, IconButton currentButton, Panel Panel_Titulo = null, Panel Panel_Logo = null, Button Button_Deshabilitar = null) {
+            if(btnSender != null) {
+                if(currentButton != (IconButton)btnSender) {
                     DisableButton(subPanel);
                     Color color = SelectThemeColor(currentButton);
                     currentButton = (IconButton)btnSender;
@@ -60,23 +51,20 @@ namespace Presentacion.Config
                     currentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                     Config.ThemeColor.Primary = color;
                     Config.ThemeColor.Secondary = Config.ThemeColor.ChangeColorBrightness(color, -0.3);
-                    if (Panel_Titulo != null)
+                    if(Panel_Titulo != null)
                         Panel_Titulo.BackColor = color;
-                    if (Panel_Logo != null)
+                    if(Panel_Logo != null)
                         Panel_Logo.BackColor = Config.ThemeColor.ChangeColorBrightness(color, -0.3);
-                    if (Button_Deshabilitar != null)
+                    if(Button_Deshabilitar != null)
                         Button_Deshabilitar.Visible = true;
                 }
             }
         }
 
-        public static void DisableButton(Panel subPanel)
-        {
+        public static void DisableButton(Panel subPanel) {
 
-            foreach (Control previousBtn in subPanel.Controls)
-            {
-                if (previousBtn.GetType() == typeof(IconButton))
-                {
+            foreach(Control previousBtn in subPanel.Controls) {
+                if(previousBtn.GetType() == typeof(IconButton)) {
                     previousBtn.BackColor = Color.FromArgb(64, 112, 147);
                     previousBtn.ForeColor = Color.Black;
                     previousBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -84,9 +72,8 @@ namespace Presentacion.Config
             }
         }
 
-        public Form Reset(Form activeForm, Panel subPanel, Label Label_Titulo, Panel Panel_Titulo, Panel Panel_Logo, IconButton IconButton_currentButton, Button Button_Deshabilitar, string Text_Label_Titulo = "HOME")
-        {
-            if (activeForm != null)
+        public Form Reset(Form activeForm, Panel subPanel, Label Label_Titulo, Panel Panel_Titulo, Panel Panel_Logo, IconButton IconButton_currentButton, Button Button_Deshabilitar, string Text_Label_Titulo = "HOME") {
+            if(activeForm != null)
                 activeForm.Close();
             DisableButton(subPanel);
             Label_Titulo.Text = Text_Label_Titulo;

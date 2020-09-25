@@ -1,17 +1,13 @@
 ﻿using Presentacion.Config.Forms;
 
-namespace Presentacion.Config.Report
-{
-    public partial class FormFabricanteReport : FormReport
-    {
-        public FormFabricanteReport()
-        {
+namespace Presentacion.Config.Report {
+    public partial class FormFabricanteReport : FormReport {
+        public FormFabricanteReport() {
             InitializeComponent();
             Report_Load();
         }
 
-        protected override void Report_Load()
-        {
+        protected override void Report_Load() {
             Negocios.FabricanteReport reportModel = new Negocios.FabricanteReport();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource = new

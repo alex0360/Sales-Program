@@ -3,21 +3,17 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Presentacion.Config.Forms
-{
-    public partial class FormProducto : FormBase
-    {
+namespace Presentacion.Config.Forms {
+    public partial class FormProducto : FormBase {
         Negocios.Producto obj;
         DataSet dataSet;
-        public FormProducto()
-        {
+        public FormProducto() {
             InitializeComponent();
 
             _ReSize();
         }
 
-        private void FormProducto_Load(object sender, EventArgs e)
-        {
+        private void FormProducto_Load(object sender, EventArgs e) {
             this.Top = 0;
             this.Left = 0;
             LoadTheme(L_Registros);
@@ -27,8 +23,7 @@ namespace Presentacion.Config.Forms
 
         #region ReSize
         private ReSize ReSize;
-        private void _ReSize()
-        {
+        private void _ReSize() {
             ReSize = new ReSize(this);
             this.Load += FormProducto_Load;
             this.Resize += _Resize;
@@ -36,19 +31,15 @@ namespace Presentacion.Config.Forms
 
         private void _Resize(object sender, EventArgs e) => ReSize._resize();
 
-        private void IB_Buscar_Resize(object sender, EventArgs e)
-        {
+        private void IB_Buscar_Resize(object sender, EventArgs e) {
             IB_Buscar.Height = TB_Fabricante.Size.Height;
         }
         #endregion
 
         #region DataGridView
-        private void MostrarTodoslosRegistrosCargados()
-        {
-            try
-            {
-                if (obj == null)
-                {
+        private void MostrarTodoslosRegistrosCargados() {
+            try {
+                if(obj == null) {
                     obj = new Negocios.Producto();
                 }
                 //DSQL.Tables["VerRecord"].Clear();
@@ -61,15 +52,12 @@ namespace Presentacion.Config.Forms
                 DGV_Data.DataMember = "VerRecord";
                 //lbl_total.Visible = true;
 
-            }
-            catch (Exception ex)
-            {
+            } catch(Exception ex) {
                 MessageBox.Show(ex.Message);
             }
         }
 
-        private void SetupColumnsCargadas(DataSet dataSet)
-        {
+        private void SetupColumnsCargadas(DataSet dataSet) {
             DGV_Data.Columns.Clear();
 
             DGV_Data.ScrollBars = ScrollBars.Both;
@@ -122,109 +110,83 @@ namespace Presentacion.Config.Forms
         #endregion
 
         #region Eventos Enter y Leave
-        private void TB_Descripcion_Enter(object sender, EventArgs e)
-        {
-            if (TB_Descripcion.Text == "   Descripcion")
-            {
+        private void TB_Descripcion_Enter(object sender, EventArgs e) {
+            if(TB_Descripcion.Text == "   Descripcion") {
                 TB_Descripcion.Text = string.Empty;
                 TB_Descripcion.ForeColor = Color.Black;
             }
         }
 
-        private void TB_Descripcion_Leave(object sender, EventArgs e)
-        {
-            if (TB_Descripcion.Text == string.Empty)
-            {
+        private void TB_Descripcion_Leave(object sender, EventArgs e) {
+            if(TB_Descripcion.Text == string.Empty) {
                 TB_Descripcion.Text = "   Descripcion";
                 TB_Descripcion.ForeColor = Config.Colores.Secudary;
             }
         }
 
-        private void TB_ID_Enter(object sender, EventArgs e)
-        {
-            if (TB_ID.Text == "   Codigo")
-            {
+        private void TB_ID_Enter(object sender, EventArgs e) {
+            if(TB_ID.Text == "   Codigo") {
                 TB_ID.Text = string.Empty;
                 TB_ID.ForeColor = Color.Black;
             }
         }
 
-        private void TB_ID_Leave(object sender, EventArgs e)
-        {
-            if (TB_ID.Text == string.Empty)
-            {
+        private void TB_ID_Leave(object sender, EventArgs e) {
+            if(TB_ID.Text == string.Empty) {
                 TB_ID.Text = "   Codigo";
                 TB_ID.ForeColor = Config.Colores.Secudary;
             }
         }
 
-        private void TB_Fabricante_Enter(object sender, EventArgs e)
-        {
-            if (TB_Fabricante.Text == "   Fabricante")
-            {
+        private void TB_Fabricante_Enter(object sender, EventArgs e) {
+            if(TB_Fabricante.Text == "   Fabricante") {
                 TB_Fabricante.Text = string.Empty;
                 TB_Fabricante.ForeColor = Color.Black;
             }
         }
 
-        private void TB_Fabricante_Leave(object sender, EventArgs e)
-        {
-            if (TB_Fabricante.Text == string.Empty)
-            {
+        private void TB_Fabricante_Leave(object sender, EventArgs e) {
+            if(TB_Fabricante.Text == string.Empty) {
                 TB_Fabricante.Text = "   Fabricante";
                 TB_Fabricante.ForeColor = Config.Colores.Secudary;
             }
         }
 
-        private void TB_ID_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!(char.IsNumber(e.KeyChar)) && (e.KeyChar != (char)Keys.Back))
-            {
+        private void TB_ID_KeyPress(object sender, KeyPressEventArgs e) {
+            if(!(char.IsNumber(e.KeyChar)) && (e.KeyChar != (char)Keys.Back)) {
                 e.Handled = true;
                 return;
             }
         }
         #endregion
 
-        private void IB_Buscar_Click(object sender, EventArgs e)
-        {
+        private void IB_Buscar_Click(object sender, EventArgs e) {
             string parametro = "";
             int VARIABLE = 0;
             obj = new Negocios.Producto();
-            try
-            {
+            try {
                 DGV_Data.Refresh();
 
-                if (TB_ID.Text != "   Codigo" && TB_ID.Text != "")
-                {
-                    if (VARIABLE != 1)
-                    {
+                if(TB_ID.Text != "   Codigo" && TB_ID.Text != "") {
+                    if(VARIABLE != 1) {
                         parametro = " ID_PRODUCTO=" + TB_ID.Text;
                     }
                     VARIABLE = 1;
                 }
 
-                if (TB_Descripcion.Text != "   Descripcion" && TB_Descripcion.Text != "")
-                {
-                    if (VARIABLE != 1)
-                    {
+                if(TB_Descripcion.Text != "   Descripcion" && TB_Descripcion.Text != "") {
+                    if(VARIABLE != 1) {
                         parametro = " DESC_PRODUCTO LIKE '%" + TB_Descripcion.Text + "%'";
-                    }
-                    else
-                    {
+                    } else {
                         parametro = parametro + " AND DESC_PRODUCTO  LIKE '%" + TB_Descripcion.Text + "%'";
                     }
                     VARIABLE = 1;
                 }
 
-                if (TB_Fabricante.Text != "   Fabricante" && TB_Fabricante.Text != "")
-                {
-                    if (VARIABLE != 1)
-                    {
+                if(TB_Fabricante.Text != "   Fabricante" && TB_Fabricante.Text != "") {
+                    if(VARIABLE != 1) {
                         parametro = " NOMB_FABRICANTE LIKE '%" + TB_Fabricante.Text + "%'";
-                    }
-                    else
-                    {
+                    } else {
                         parametro = parametro + " AND NOMB_FABRICANTE LIKE '%" + TB_Fabricante.Text + "%'";
                     }
                     VARIABLE = 1;
@@ -235,8 +197,7 @@ namespace Presentacion.Config.Forms
                                " Inner Join [BD_VENTAS].[dbo].[FABRICANTES] as Fabricante" +
                                " on Producto.ID_FABRICANTE = Fabricante.ID_FABRICANTE";
 
-                if (VARIABLE == 1)
-                {
+                if(VARIABLE == 1) {
                     parametro = SQL + " WHERE " + parametro;
 
                     dataSet.Clear();
@@ -248,17 +209,13 @@ namespace Presentacion.Config.Forms
                     DGV_Data.DataMember = "VerRecord";
                     L_Registros.Visible = true;
                     L_Registros.Text = string.Format("R: {0}", dataSet.Tables["VerRecord"].Rows.Count.ToString());
-                }
-                else
-                {
+                } else {
                     MostrarTodoslosRegistrosCargados();
                     DGV_Data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
                     L_Registros.Visible = false;
                 }
 
-            }
-            catch (Exception ex)
-            {
+            } catch(Exception ex) {
                 MessageBox.Show(ex.Message);
             }
         }
@@ -266,8 +223,7 @@ namespace Presentacion.Config.Forms
 
         int id = 0;
         #region Insertar_actualizar_Eliminar_Reporte
-        protected override void IconButton_Insertar_Click(object sender, EventArgs e)
-        {
+        protected override void IconButton_Insertar_Click(object sender, EventArgs e) {
             FormProductoInsUp form = new FormProductoInsUp();
             form.StartPosition = FormStartPosition.CenterScreen;
             form.ShowInTaskbar = false;
@@ -278,20 +234,16 @@ namespace Presentacion.Config.Forms
 
         protected override void IconButton_Actualizar_Click(object sender, EventArgs e) => SelectToEditItem();
 
-        protected override void IconButton_Delete_Click(object sender, EventArgs e)
-        {
+        protected override void IconButton_Delete_Click(object sender, EventArgs e) {
             int fila = DGV_Data.CurrentRow.Index;
 
-            if (DGV_Data.Rows.Count != 0)
-            {
+            if(DGV_Data.Rows.Count != 0) {
                 id = Convert.ToInt32(DGV_Data.Rows[fila].Cells[0].Value);
-                if (obj == null)
+                if(obj == null)
                     obj = new Negocios.Producto();
-                if (obj.ValidarRecord(id))
-                {
-                    if (MessageBox.Show("Deseas Eliminar este Registro?", "Eliminar",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-                    {
+                if(obj.ValidarRecord(id)) {
+                    if(MessageBox.Show("Deseas Eliminar este Registro?", "Eliminar",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes) {
                         obj.Eliminar(id);
 
                         MessageBox.Show("Registro Eliminado correctamente");
@@ -301,39 +253,31 @@ namespace Presentacion.Config.Forms
             }
         }
 
-        protected override void IconButton_Imprimir_Click(object sender, EventArgs e)
-        {
+        protected override void IconButton_Imprimir_Click(object sender, EventArgs e) {
             Presentacion.Config.Report.FormProductoReport form = new Presentacion.Config.Report.FormProductoReport();
             form.ShowDialog();
         }
 
         #endregion
-        protected override void DGV_Data_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            if (DGV_Data.CurrentRow != null)
-            {
+        protected override void DGV_Data_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
+            if(DGV_Data.CurrentRow != null) {
 
             }
         }
 
-        protected override void DGV_Data_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-        {
+        protected override void DGV_Data_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e) {
             e.Control.KeyPress -= AllowNumbersOnly;
-            if (DGV_Data.CurrentCell.ColumnIndex == 4)
-            {
+            if(DGV_Data.CurrentCell.ColumnIndex == 4) {
                 e.Control.KeyPress += AllowNumbersOnly;
             }
         }
 
         protected override void DGV_Data_CellDoubleClick(object sender, DataGridViewCellEventArgs e) => SelectToEditItem();
-        protected void SelectToEditItem()
-        {
-            try
-            {
+        protected void SelectToEditItem() {
+            try {
                 int fila = DGV_Data.CurrentRow.Index;
 
-                if (DGV_Data.Rows.Count != 0)
-                {
+                if(DGV_Data.Rows.Count != 0) {
                     id = Convert.ToInt32(DGV_Data.Rows[fila].Cells[0].Value);
 
                     FormProductoInsUp form = new FormProductoInsUp(id);
@@ -342,23 +286,18 @@ namespace Presentacion.Config.Forms
                     form.ShowDialog();
                     id = 0;
                     MostrarTodoslosRegistrosCargados();
-                }
-                else
-                {
+                } else {
                     MessageBox.Show("Debe seleccionar un elemento de la lista",
                         "Información del Sistema",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch(Exception ex) {
                 MessageBox.Show(ex.Message, "Información del Sistema",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void AllowNumbersOnly(Object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+        private void AllowNumbersOnly(Object sender, KeyPressEventArgs e) {
+            if(!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
                 e.Handled = true;
         }
     }
