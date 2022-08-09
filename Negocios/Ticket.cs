@@ -25,7 +25,6 @@ namespace Negocios {
             return line.AppendLine(LineaGuion).ToString();
         }
 
-
         public static void EncabezadoVenta() {
             string LineEncavesado = "Articulo          Cant   P.Unit   Valor";   // 40 caracteres agrega lineas de  encabezados
             line.AppendLine(LineEncavesado);
@@ -205,7 +204,6 @@ namespace Negocios {
         public void ImprimirTiket(string Impresora = "Microsoft Print to PDF") {
             File.WriteAllText("Factura.txt", line.ToString());
 
-
             line = new StringBuilder();
 
             try {
@@ -264,7 +262,5 @@ namespace Negocios {
             else
                 ev.HasMorePages = false;
         }
-
     }
-
 }
