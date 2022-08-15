@@ -1,15 +1,29 @@
-﻿namespace Datos {
-    public class Conexion {
+﻿using System;
+using System.IO;
+
+namespace Datos
+{
+    public class Conexion
+    {
         public static System.Data.SqlClient.SqlConnection SqlConnection = Trigger();
 
-        private static System.Data.SqlClient.SqlConnection Trigger() {
-            //SqlConnection =Properties.Settings.Default.ConntionStringDta;
+        private static System.Data.SqlClient.SqlConnection Trigger()
+        {
+            var connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={Path.Combine(Environment.CurrentDirectory, "BD_VENTAS_020.mdf")};Integrated Security=True";
+
             SqlConnection =
                 new System.Data.SqlClient.SqlConnection
-                    (System.Configuration.ConfigurationManager.ConnectionStrings["Presentacion.Properties.Settings.Conexion"].ToString());
+                    (connectionString);
 
             return SqlConnection;
         }
-        ~Conexion() { if(SqlConnection.State == System.Data.ConnectionState.Open) SqlConnection.Close(); }
+
+        ~Conexion()
+        {
+            if(SqlConnection.State == System.Data.ConnectionState.Open)
+            {
+                SqlConnection.Close();
+            }
+        }
     }
 }

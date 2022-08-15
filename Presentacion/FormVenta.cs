@@ -335,12 +335,11 @@ namespace Presentacion
 
         }
 
-        string productoIDs;
-        string productoscant;
         private void Calcular()
         {
-            productoIDs = "";
-            productoscant = "";
+            var productoIDs = "";
+            var productoscant = "";
+
             if(this.DGV_Data.Rows.Count > 0)
             {
                 double total = 0;
@@ -356,6 +355,7 @@ namespace Presentacion
                     total += subtotal;
                     row.Cells[4].Value = String.Format(culture2, "{0:n}", subtotal);
                 }
+
                 Label_MostrarTotalPagar.Text = String.Format(culture2, "{0:n}", total);
             }
         }
@@ -499,7 +499,6 @@ namespace Presentacion
             Ticket.AgregaTotales("Efectivo Entregado: ", double.Parse(Label_MostrarTotalPagar.Text));
             Ticket.AgregaTotales("Efectivo Devuelto: ", double.Parse("000"));
 
-
             // Ticket1.LineasTotales(); // imprime linea 
 
             Ticket.TextoIzquierda(" ");
@@ -514,8 +513,7 @@ namespace Presentacion
             }
 
             if(Impresora.impresoraDisponible.Count > 0)
-                Ticket.ImprimirTiket(); //Imprimir
-                                        // ticket.ImprimirTiket(Impresora.impresoraDisponible[3].ToString()); //Imprimir
+                Ticket.ImprimirTiket();
         }
     }
 }
